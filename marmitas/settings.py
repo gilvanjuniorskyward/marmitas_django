@@ -4,6 +4,7 @@ import os
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controlemarmitas.up.railway.app",
+    "http://controlemarmitas.up.railway.app",
 ]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
