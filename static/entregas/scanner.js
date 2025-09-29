@@ -1,32 +1,11 @@
-// Simple scanner using the BarcodeDetector API (Chrome/Android recommended)
 let running = false;
 const statusEl = document.getElementById('status');
-const videoEl = document.getElementById('camera');
 const toggleBtn = document.getElementById('toggle');
 const manualInput = document.getElementById('manual');
 const enviarBtn = document.getElementById('enviar');
+const readerEl = document.getElementById('reader');
 
-async function startCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    videoEl.srcObject = stream;
-    await videoEl.play();
-    statusEl.textContent = 'Câmera iniciada. Lendo…';
-    return true;
-  } catch (e) {
-    statusEl.textContent = 'Erro ao acessar a câmera: ' + e.message;
-    return false;
-  }
-}
-
-async function stopCamera() {
-  const stream = videoEl.srcObject;
-  if (stream) {
-    stream.getTracks().forEach(t => t.stop());
-    videoEl.srcObject = null;
-  }
-  statusEl.textContent = 'Câmera parada.';
-}
+let html5QrCode = null;
 
 async function sendCode(code) {
   try {
@@ -43,49 +22,46 @@ async function sendCode(code) {
   }
 }
 
-async function scanLoop() {
-  if (!('BarcodeDetector' in window)) {
-    statusEl.textContent = 'Leitor não suportado neste navegador. Use o campo manual.';
-    return;
-  }
-  const formats = ['qr_code','code_128','code_39','ean_13','ean_8','upc_a','upc_e'];
-  let detector;
+async function startScanner() {
+  // Mostra a div do leitor
+  readerEl.style.display = 'block';
+  
+  html5QrCode = new Html5Qrcode("reader");
+
   try {
-    detector = new BarcodeDetector({ formats });
-  } catch (e) {
-    statusEl.textContent = 'Leitor indisponível. Use o campo manual.';
-    return;
-  }
-  while (running) {
-    try {
-      const barcodes = await detector.detect(videoEl);
-      if (barcodes && barcodes.length > 0) {
-        const code = barcodes[0].rawValue;
+    await html5QrCode.start(
+      { facingMode: "environment" }, // câmera traseira
+      { fps: 10, qrbox: 250 },
+      async (decodedText) => {
         running = false;
-        await sendCode(code);
-        await stopCamera();
-        toggleBtn.textContent = 'Iniciar Leitura';
-        break;
+        await sendCode(decodedText);
+        stopScanner();
       }
-    } catch (e) {
-      // ignore frame errors
-    }
-    await new Promise(r => setTimeout(r, 150));
+    );
+    statusEl.textContent = "Câmera iniciada. Lendo…";
+  } catch (e) {
+    statusEl.textContent = "Erro ao acessar a câmera: " + e.message;
+  }
+}
+
+function stopScanner() {
+  if (html5QrCode) {
+    html5QrCode.stop().then(() => {
+      readerEl.style.display = 'none';
+      statusEl.textContent = 'Câmera parada.';
+    });
   }
 }
 
 toggleBtn.addEventListener('click', async () => {
   if (running) {
     running = false;
-    await stopCamera();
+    stopScanner();
     toggleBtn.textContent = 'Iniciar Leitura';
   } else {
-    const ok = await startCamera();
-    if (ok) {
-      running = true;
-      toggleBtn.textContent = 'Parar Leitura';
-      scanLoop();
-    }
+    running = true;
+    toggleBtn.textContent = 'Parar Leitura';
+    startScanner();
   }
 });
 
