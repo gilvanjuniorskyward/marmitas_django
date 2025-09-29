@@ -10,8 +10,10 @@ CSRF_TRUSTED_ORIGINS = [
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'dev-secret-key-change-me'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = ['"controlemarmitas.up.railway.app",
+    "localhost",
+    "127.0.0.1",']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
