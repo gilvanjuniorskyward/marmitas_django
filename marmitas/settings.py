@@ -3,7 +3,7 @@ import os
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://marmitasdjango.up.railway.app",
+    "https://controlemarmitas.up.railway.app",
 ]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
