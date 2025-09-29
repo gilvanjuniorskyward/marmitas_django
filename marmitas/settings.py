@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 
-
 CSRF_TRUSTED_ORIGINS = [
     "https://controlemarmitas.up.railway.app",
     "http://controlemarmitas.up.railway.app",
