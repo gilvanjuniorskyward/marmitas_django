@@ -11,9 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'dev-secret-key-change-me'
 DEBUG = False
-ALLOWED_HOSTS = ['"controlemarmitas.up.railway.app",
+ALLOWED_HOSTS = [
+    "controlemarmitas.up.railway.app",
     "localhost",
-    "127.0.0.1",']
+    "127.0.0.1",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
