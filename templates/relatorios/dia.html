@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Relatório Diário • Marmitas{% endblock %}
+{% block content %}
+<h1>Relatório Diário</h1>
+<form class="row" method="get">
+  <label>Data <input type="date" name="data" value="{{ data|date:'Y-m-d' }}"></label>
+  <button type="submit">Buscar</button>
+  <a class="btn" href="?data={{ data|date:'Y-m-d' }}&export=json">Exportar JSON</a>
+</form>
+
+<h2>Retiradas em {{ data }}</h2>
+<table class="table">
+  <thead><tr><th>Hora</th><th>Funcionário</th><th>Matrícula</th></tr></thead>
+  <tbody>
+  {% for r in retiradas %}
+    <tr>
+      <td>{{ r.criado_em|date:"H:i:s" }}</td>
+      <td>{{ r.funcionario.nome }}</td>
+      <td>{{ r.funcionario.matricula }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="3">Nenhuma retirada registrada.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Faltantes</h2>
+<ul>
+  {% for f in faltantes %}
+    <li>{{ f.nome }} ({{ f.matricula }})</li>
+  {% empty %}
+    <li>Todos retiraram.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

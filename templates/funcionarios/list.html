@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Funcionários • Marmitas{% endblock %}
+{% block content %}
+<h1>Funcionários</h1>
+<a class="btn" href="{% url 'funcionario_create' %}">+ Novo</a>
+<table class="table">
+  <thead><tr><th>ID</th><th>Nome</th><th>Matrícula</th><th>QR</th><th>Ações</th></tr></thead>
+  <tbody>
+  {% for f in funcionarios %}
+    <tr>
+      <td>{{ f.id }}</td>
+      <td><a href="{% url 'funcionario_detail' f.id %}">{{ f.nome }}</a></td>
+      <td>{{ f.matricula }}</td>
+      <td><a href="{% url 'funcionario_qrcode' f.id %}" target="_blank">Ver</a></td>
+      <td>
+        <a href="{% url 'funcionario_update' f.id %}">Editar</a> •
+        <a href="{% url 'funcionario_delete' f.id %}">Excluir</a>
+      </td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5">Nenhum funcionário.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Funcionário • Marmitas{% endblock %}
+{% block content %}
+<h1>Excluir Funcionário</h1>
+<p>Tem certeza que deseja excluir <strong>{{ func.nome }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="danger" type="submit">Confirmar Exclusão</button>
+  <a class="btn" href="{% url 'funcionario_list' %}">Cancelar</a>
+</form>
+{% endblock %}

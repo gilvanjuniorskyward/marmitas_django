@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Scanner • Marmitas{% endblock %}
+{% block content %}
+{% load static %}
+<h1>Leitor de QR Code / Código de Barras</h1>
+<div class="card">
+  <video id="camera" autoplay playsinline></video>
+  <div id="status">Iniciando câmera…</div>
+  <button id="toggle">Iniciar/Parar Leitura</button>
+</div>
+<div class="card">
+  <h3>Sem câmera? Digite o código manualmente</h3>
+  <input id="manual" placeholder="Cole ou digite o código" />
+  <button id="enviar">Registrar</button>
+</div>
+<script src="{% static 'entregas/scanner.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard • Marmitas{% endblock %}
+{% block content %}
+<h1>Dashboard — {{ hoje }}</h1>
+<div class="stats">
+  <div class="stat">Funcionários: <strong>{{ total }}</strong></div>
+  <div class="stat">Retiradas hoje: <strong>{{ total_retiradas }}</strong></div>
+</div>
+<table class="table">
+  <thead><tr><th>Funcionário</th><th>Matrícula</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for item in funcionarios %}
+    <tr>
+      <td>{{ item.obj.nome }}</td>
+      <td>{{ item.obj.matricula }}</td>
+      <td>{% if item.retirou %}<span class="ok">✔ Retirou</span>{% else %}<span class="pendente">• Pendente</span>{% endif %}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="3">Nenhum funcionário cadastrado.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

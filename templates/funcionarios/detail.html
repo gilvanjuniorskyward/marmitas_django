@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Funcionário • Marmitas{% endblock %}
+{% block content %}
+<h1>{{ func.nome }}</h1>
+<p><strong>Matrícula:</strong> {{ func.matricula }}</p>
+<p><strong>Token:</strong> {{ func.token }}</p>
+<p><img src="{% url 'funcionario_qrcode' func.id %}" alt="QR Code"></p>
+<p><a class="btn" href="{% url 'funcionario_update' func.id %}">Editar</a></p>
+{% endblock %}

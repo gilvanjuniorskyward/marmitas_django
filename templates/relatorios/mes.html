@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Relatório Mensal • Marmitas{% endblock %}
+{% block content %}
+<h1>Relatório Mensal</h1>
+<form class="row" method="get">
+  <label>Ano <input type="number" name="ano" value="{{ ano }}"></label>
+  <label>Mês <input type="number" min="1" max="12" name="mes" value="{{ mes }}"></label>
+  <button type="submit">Buscar</button>
+  <a class="btn" href="?ano={{ ano }}&mes={{ mes }}&export=json">Exportar JSON</a>
+</form>
+
+<h2>Resumo por Funcionário</h2>
+<table class="table">
+  <thead><tr><th>Funcionário</th><th>Matrícula</th><th>Dias com retirada</th></tr></thead>
+  <tbody>
+  {% for item in resumo %}
+    <tr>
+      <td>{{ item.func.nome }}</td>
+      <td>{{ item.func.matricula }}</td>
+      <td>{{ item.qtd }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

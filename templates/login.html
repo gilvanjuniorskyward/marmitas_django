@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Login • Marmitas{% endblock %}
+{% block content %}
+<h1>Login</h1>
+<form method="post" class="card form">
+  {% csrf_token %}
+  {% if msg %}<div class="alert">{{ msg }}</div>{% endif %}
+  <label>Usuário <input type="text" name="username" required></label>
+  <label>Senha <input type="password" name="password" required></label>
+  <button type="submit">Entrar</button>
+</form>
+{% endblock %}
