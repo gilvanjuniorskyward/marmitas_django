@@ -6,6 +6,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://controlemarmitas.up.railway.app",
 ]
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'dev-secret-key-change-me'
