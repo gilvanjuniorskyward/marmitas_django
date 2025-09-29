@@ -3,19 +3,26 @@
 {% block content %}
 {% load static %}
 
+<!-- ✅ Apenas UMA div reader -->
+<div id="reader" style="width:300px; display:none;"></div>
+
+<!-- ✅ Biblioteca do html5-qrcode -->
 <script src="https://unpkg.com/html5-qrcode"></script>
-<div id="reader" style="width:300px;"></div>
 
 <h1>Leitor de QR Code / Código de Barras</h1>
+
 <div class="card">
-  <video id="camera" autoplay playsinline></video>
-  <div id="status">Iniciando câmera…</div>
-  <button id="toggle">Iniciar/Parar Leitura</button>
+  <div id="status">Clique em "Iniciar Leitura"</div>
+  <button id="toggle">Iniciar Leitura</button>
 </div>
+
 <div class="card">
   <h3>Sem câmera? Digite o código manualmente</h3>
   <input id="manual" placeholder="Cole ou digite o código" />
   <button id="enviar">Registrar</button>
 </div>
+
+<!-- ✅ Seu JS atualizado -->
 <script src="{% static 'entregas/scanner.js' %}"></script>
+
 {% endblock %}
